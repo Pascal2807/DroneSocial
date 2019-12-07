@@ -11,19 +11,13 @@ import Profile from './Profile/Profile';
 
 // Screens. Normally you would put these in separate files.
 const FeedVariable = () => (
-    <View>
-        <Feed></Feed>
-    </View>
+    <Feed></Feed>
 )
 const UploadVariable = () => (
-    <View>
-        <Upload></Upload>
-    </View>
+    <Upload></Upload>
 )
 const ProfileVariable = () => (
-    <View>
-        <Profile></Profile>
-    </View>
+    <Profile></Profile>
 )
 
 function AppTabView(props) {
@@ -45,8 +39,8 @@ function AppTabView(props) {
     )
 
     return (
-        <View style={{ flex: 1, alignSelf: 'stretch' }}>
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <View style={{ flex: 1 }}>
+            <View style={{ flex: 1 }}>
                 <ActiveScreen navigation={descriptor.navigation} />
             </View>
 

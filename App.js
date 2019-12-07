@@ -6,7 +6,7 @@ class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Main style={{ flex: 1 }}></Main>
+        <Main></Main>
       </View>
     );
   }
@@ -14,10 +14,7 @@ class App extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: 'white',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flex: 1
   },
 });
 
