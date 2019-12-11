@@ -67,7 +67,7 @@ class Feed extends React.Component {
 
             for (var photo in data) {
                 var photoObj = data[photo];
-                database.ref('users').child(photoObj.author).once('value').then(function (snapshot) {
+                database.ref('users').child(photoObj.author).child('username').once('value').then(function (snapshot) {
                     const exists = (snapshot.val() !== null);
                     if (exists) data = snapshot.val();
                     photo_feed.push({
@@ -75,7 +75,7 @@ class Feed extends React.Component {
                         url: photoObj.url,
                         caption: photoObj.caption,
                         posted: that.timeConverter(photoObj.posted),
-                        author: data.username
+                        author: data
                     });
                     that.setState({
                         refresh: false,
@@ -93,7 +93,7 @@ class Feed extends React.Component {
     render() {
         return (
             <View style={{ flex: 1 }}>
-                <View style={styles.container}>
+                <View style={styles.header}>
                     <Text>Feed</Text>
                 </View>
 
@@ -123,7 +123,7 @@ class Feed extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
+    header: {
         height: 70,
         paddingTop: 30,
         backgroundColor: 'white',

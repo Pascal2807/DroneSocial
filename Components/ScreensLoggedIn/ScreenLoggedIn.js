@@ -17,10 +17,12 @@ const UploadVariable = () => (
     <Upload></Upload>
 )
 const ProfileVariable = () => (
-    <Profile></Profile>
+    <Profile moveToUpload={() => }></Profile>
 )
 
 function AppTabView(props) {
+
+
     const tabs = [
         { key: 'Feed', label: 'Feed', barColor: '#00695C', icon: 'movie' },
         { key: 'Upload', label: 'Upload', barColor: '#6A1B9A', icon: 'music-note' },

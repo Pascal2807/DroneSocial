@@ -1,33 +1,47 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { f, database, auth, storage } from '../../../Config/Config';
 
 class Upload extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            loggedIn: false
+        }
     }
+
+    componentDidMount = () => {
+        var that = this;
+        f.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                //Logged in
+                that.setState({
+                    loggedIn: true
+                });
+            }
+            else {
+                //Not logged in
+                that.setState({
+                    loggedIn: false
+                });
+            }
+        });
+    }
+
     render() {
         return (
-            <View style={{ flex: 1 }}>
-                <View style={styles.container}>
-                    <Text>Upload</Text>
-                </View>
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                {this.state.loggedIn == true ? (
+                    <Text>Profile</Text>
+                ) : (
+                        <View>
+                            <Text>You are not logged in!</Text>
+                        </View>
+                    )}
             </View>
         );
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        height: 70,
-        paddingTop: 30,
-        backgroundColor: 'white',
-        borderColor: 'lightgrey',
-        borderBottomWidth: 0.5,
-        justifyContent: 'center',
-        alignItems: 'center',
-
-
-    }
-});
 
 export default Upload;
