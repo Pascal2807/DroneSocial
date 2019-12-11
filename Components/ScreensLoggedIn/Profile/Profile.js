@@ -53,7 +53,9 @@ class Profile extends React.Component {
                         <View style={{ paddingBottom: 20, borderBottomWidth: 1 }}>
                             <TouchableOpacity style={{ marginTop: 10, marginHorizontal: 40, paddingVertical: 15, borderRadius: 20, borderColor: 'grey', borderWidth: 1.5 }}><Text style={{ textAlign: 'center', color: 'grey' }}>Logout</Text></TouchableOpacity>
                             <TouchableOpacity style={{ marginTop: 10, marginHorizontal: 40, paddingVertical: 15, borderRadius: 20, borderColor: 'grey', borderWidth: 1.5 }}><Text style={{ textAlign: 'center', color: 'grey' }}>Edit Profile</Text></TouchableOpacity>
-                            <TouchableOpacity onPress={this.moveToUpload} style={{ backgroundColor: 'grey', marginTop: 10, marginHorizontal: 40, paddingVertical: 35, borderRadius: 20, borderColor: 'grey', borderWidth: 1.5 }}><Text style={{ textAlign: 'center', color: 'white' }}>Upload Profil Picutre</Text></TouchableOpacity>
+                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('Upload') }} style={{ backgroundColor: 'grey', marginTop: 10, marginHorizontal: 40, paddingVertical: 35, borderRadius: 20, borderColor: 'grey', borderWidth: 1.5 }}><Text style={{ textAlign: 'center', color: 'white' }}>Upload Profil Picutre</Text></TouchableOpacity>
+                        </View>
+                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'green' }}>
                         </View>
                     </View>
                 ) : (
@@ -68,8 +70,8 @@ class Profile extends React.Component {
 
 const styles = StyleSheet.create({
     header: {
-        height: 70,
-        paddingTop: 30,
+        height: 45,
+        paddingTop: 10,
         backgroundColor: 'white',
         borderColor: 'lightgrey',
         borderBottomWidth: 0.5,

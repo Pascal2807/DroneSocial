@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, FlatList } from 'react-native';
+import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from 'react-native';
 import { f, database, auth, storage } from '../../../Config/Config';
 
 class Feed extends React.Component {
@@ -75,7 +75,8 @@ class Feed extends React.Component {
                         url: photoObj.url,
                         caption: photoObj.caption,
                         posted: that.timeConverter(photoObj.posted),
-                        author: data
+                        author: data,
+                        authorId: photoObj.author
                     });
                     that.setState({
                         refresh: false,
@@ -105,7 +106,9 @@ class Feed extends React.Component {
                                 <View key={index} style={{ width: '100%', overflow: 'hidden', marginBottom: 5, justifyContent: 'space-between', borderBottomWidth: 1, borderColor: 'grey' }}>
                                     <View style={{ padding: 5, width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
                                         <Text>{item.posted}</Text>
-                                        <Text>{item.author}</Text>
+                                        <TouchableOpacity onPress={() => this.props.navigation.navigate('User', { userId: item.authorId })}>
+                                            <Text>{item.author}</Text>
+                                        </TouchableOpacity>
                                     </View>
                                     <View>
                                         <Image source={{ uri: item.url }} style={{ resizeMode: 'cover', width: '100%', height: 275 }} />
@@ -124,8 +127,8 @@ class Feed extends React.Component {
 
 const styles = StyleSheet.create({
     header: {
-        height: 70,
-        paddingTop: 30,
+        height: 45,
+        paddingTop: 10,
         backgroundColor: 'white',
         borderColor: 'lightgrey',
         borderBottomWidth: 0.5,

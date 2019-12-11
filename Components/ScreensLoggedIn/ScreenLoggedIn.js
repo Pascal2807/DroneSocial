@@ -1,75 +1,77 @@
-import React, { useCallback } from 'react'
-import { View, Text } from 'react-native'
-import { createNavigator, TabRouter, createAppContainer } from 'react-navigation'
-import BottomNavigation, {
-    FullTab
-} from 'react-native-material-bottom-navigation'
-import Icon from '@expo/vector-icons/MaterialCommunityIcons'
 import Feed from './Feed/Feed';
 import Upload from './Upload/Upload';
 import Profile from './Profile/Profile';
+import UserProfile from './Profile/UserProfile';
+import Comments from './Comments/Comments';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { SafeAreaView } from 'react-native';
+import React from 'react';
+import { createMaterialTopTabNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
 
-// Screens. Normally you would put these in separate files.
-const FeedVariable = () => (
-    <Feed></Feed>
+const AppTabNavigator = createMaterialTopTabNavigator({
+    Feed: {
+        screen: Feed,
+        navigationOptions: {
+            tabBarLabel: 'Feed',
+            tabBarIcon: ({ tintcolor }) => (
+                <Icon name='ios-home' color={tintcolor} size={24} />
+            )
+        }
+    },
+    Upload: {
+        screen: Upload,
+        navigationOptions: {
+            tabBarLabel: 'Upload',
+            tabBarIcon: ({ tintcolor }) => (
+                <Icon name='ios-home' color={tintcolor} size={24} />
+            )
+        }
+    },
+    Profile: {
+        screen: Profile,
+        navigationOptions: {
+            tabBarLabel: 'Profile',
+            tabBarIcon: ({ tintcolor }) => (
+                <Icon name='ios-home' color={tintcolor} size={24} />
+            )
+        }
+    }
+}, {
+        initialRouteName: 'Feed',
+        //order: ['Feed', 'Upload', 'Profile'],
+        tabBarPosition: 'bottom',
+        tabBarOptions: {
+            activeTintColor: 'black',
+            inactiveTintColor: 'black',
+            style: {
+                backgroundColor: 'white'
+            },
+            indicatorStyle: {
+                height: 0
+            }
+        }
+    })
+
+const MainStack = createStackNavigator(
+    {
+        Home: { screen: AppTabNavigator },
+        User: { screen: UserProfile },
+        Comments: { screen: Comments }
+    }, {
+        initialRouteName: 'Home',
+        mode: 'modal',
+        headerMode: 'none'
+    }
 )
-const UploadVariable = () => (
-    <Upload></Upload>
-)
-const ProfileVariable = () => (
-    <Profile moveToUpload={() => }></Profile>
-)
+const AppContainer = createAppContainer(MainStack);
 
-function AppTabView(props) {
-
-
-    const tabs = [
-        { key: 'Feed', label: 'Feed', barColor: '#00695C', icon: 'movie' },
-        { key: 'Upload', label: 'Upload', barColor: '#6A1B9A', icon: 'music-note' },
-        { key: 'Profile', label: 'Profile', barColor: '#1565C0', icon: 'book' }
-    ]
-
-    const { navigation, descriptors } = props
-    const { routes, index } = navigation.state
-    const activeScreenName = routes[index].key
-    const descriptor = descriptors[activeScreenName]
-    const ActiveScreen = descriptor.getComponent()
-
-    const handleTabPress = useCallback(
-        newTab => navigation.navigate(newTab.key),
-        [navigation]
-    )
-
-    return (
-        <View style={{ flex: 1 }}>
-            <View style={{ flex: 1 }}>
-                <ActiveScreen navigation={descriptor.navigation} />
-            </View>
-
-            <BottomNavigation
-                tabs={tabs}
-                activeTab={activeScreenName}
-                onTabPress={handleTabPress}
-                renderTab={({ tab, isActive }) => (
-                    <FullTab
-                        isActive={isActive}
-                        key={tab.key}
-                        label={tab.label}
-                        renderIcon={() => <Icon name={tab.icon} size={24} color="white" />}
-                    />
-                )}
-            />
-        </View>
-    )
+class ScreenLoggedIn extends React.Component {
+    render() {
+        return (
+            <SafeAreaView style={{ flex: 1 }}>
+                <AppContainer />
+            </SafeAreaView>
+        );
+    }
 }
-
-const AppTabRouter = TabRouter({
-    Feed: { screen: FeedVariable },
-    Upload: { screen: UploadVariable },
-    Profile: { screen: ProfileVariable }
-})
-
-const Navigator = createNavigator(AppTabView, AppTabRouter, {});
-const ScreenLoggedIn = createAppContainer(Navigator);
-
 export default ScreenLoggedIn;
